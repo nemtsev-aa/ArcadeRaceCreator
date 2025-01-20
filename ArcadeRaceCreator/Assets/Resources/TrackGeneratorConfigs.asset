@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: facc3a765dbe65945916cd88af4862b2, type: 3}
+  m_Name: TrackGeneratorConfigs
+  m_EditorClassIdentifier: 
+  <SegmentConfigs>k__BackingField:
+  - <Type>k__BackingField: 0
+    <Icon>k__BackingField: {fileID: 21300000, guid: 981ef6cc1b7c24d4f9119075694b040e, type: 3}
+    <Prefab>k__BackingField: {fileID: 0}
+  - <Type>k__BackingField: 2
+    <Icon>k__BackingField: {fileID: 21300000, guid: 27d2b5161a5791244901e7849bc180fd, type: 3}
+    <Prefab>k__BackingField: {fileID: 0}
+  - <Type>k__BackingField: 3
+    <Icon>k__BackingField: {fileID: 21300000, guid: 9c2b6cb265c72ca4788308565557530d, type: 3}
+    <Prefab>k__BackingField: {fileID: 0}
+  - <Type>k__BackingField: 1
+    <Icon>k__BackingField: {fileID: 21300000, guid: 70a60cc4e42b145409b21e6dfd2ca50d, type: 3}
+    <Prefab>k__BackingField: {fileID: 0}

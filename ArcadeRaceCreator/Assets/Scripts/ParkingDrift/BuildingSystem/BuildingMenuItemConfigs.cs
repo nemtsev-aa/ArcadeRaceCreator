@@ -4,9 +4,9 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(BuildingMenuItemConfigs), menuName = "Configs/" + nameof(BuildingMenuItemConfigs))]
 public class BuildingMenuItemConfigs : ScriptableObject {
-    [field: SerializeField] public List<BuildingMenuItemConfig> Configs;
+    [field: SerializeField] public List<BuildingMenuViewConfig> Configs;
 
-    public BuildingMenuItemConfig GetConfigByBuildingFunctionType(BuildingFunctionType type) {
+    public BuildingMenuViewConfig GetConfigByBuildingFunctionType(BuildingFunctionTypes type) {
         return Configs.FirstOrDefault(t => t.Type == type);
     }
 }

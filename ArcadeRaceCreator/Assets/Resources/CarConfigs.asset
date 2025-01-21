@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07c2bcdeba8a9904fb6e2107f4f9e05b, type: 3}
+  m_Name: CarConfigs
+  m_EditorClassIdentifier: 
+  <Configs>k__BackingField:
+  - <Type>k__BackingField: 0
+    <Name>k__BackingField: "\u0410\u0440\u043A\u0430\u0434\u043D\u044B\u0435"
+    <Description>k__BackingField: 
+    <Icon>k__BackingField: {fileID: 21300000, guid: a68dbe6e33c1acd4993d1a9548cbd559, type: 3}
+    <Configs>k__BackingField:
+    - <Name>k__BackingField: Prototype1
+      <Prefab>k__BackingField: {fileID: 4048613377605677863, guid: 88991c503055224479d831c48c5f71c3, type: 3}
+    - <Name>k__BackingField: Prototype2
+      <Prefab>k__BackingField: {fileID: 7446179184557334073, guid: e8cff700c317eec46918374c65eed0cc, type: 3}
+    - <Name>k__BackingField: Prototype3
+      <Prefab>k__BackingField: {fileID: 8536683423703102006, guid: d5aa6f7c789126348aa2df055aeac0b3, type: 3}
+  - <Type>k__BackingField: 1
+    <Name>k__BackingField: "\u0420\u0430\u043B\u043B\u0438"
+    <Description>k__BackingField: 
+    <Icon>k__BackingField: {fileID: 21300000, guid: 7ac0c7e4b6339af4d9441038c87be1ab, type: 3}
+    <Configs>k__BackingField:
+    - <Name>k__BackingField: Ford
+      <Prefab>k__BackingField: {fileID: 1822598916070863920, guid: f11f0f2b66ea38c429ba5132de87fe61, type: 3}
+    - <Name>k__BackingField: Lanacia
+      <Prefab>k__BackingField: {fileID: 6607469202696014128, guid: 1767d2c4c4b243e49897c3b52d20796e, type: 3}
+    - <Name>k__BackingField: Suzoki
+      <Prefab>k__BackingField: {fileID: 4383232504186759429, guid: a47e91344d698a543a790589b8103265, type: 3}
+  - <Type>k__BackingField: 2
+    <Name>k__BackingField: "\u041E\u0442\u0435\u0447\u0435\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0435"
+    <Description>k__BackingField: 
+    <Icon>k__BackingField: {fileID: 21300000, guid: d3272509ca9604847a04d2b93f25091c, type: 3}
+    <Configs>k__BackingField:
+    - <Name>k__BackingField: VAZ5
+      <Prefab>k__BackingField: {fileID: 4285450546008542092, guid: 3637c96bc95896e4b8c698b7225002fb, type: 3}
+    - <Name>k__BackingField: VAZ9
+      <Prefab>k__BackingField: {fileID: 1238270350285140100, guid: 365b22b5ea136a747bf3aa5ca7ba0dc5, type: 3}
+    - <Name>k__BackingField: VAZ99
+      <Prefab>k__BackingField: {fileID: 4634372371666597286, guid: b61c9bf4b607351429c1f28c8be04f86, type: 3}

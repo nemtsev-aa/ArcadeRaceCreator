@@ -5,9 +5,8 @@ using Zenject;
 using UnityEngine.EventSystems;
 
 public class BuildingManager : MonoBehaviour {
-    [SerializeField] private BuildingMenuView _buildingMenuView;
+    [SerializeField] private BuildingMenuPanel _buildingMenuView;
     [SerializeField] private LayerMask _layerMask;
-    [SerializeField] private GameObject _pointer;
 
     [SerializeField] private float _animationDuration = 0.3f;
     [SerializeField] private float _scaleMultiplier;
@@ -16,7 +15,7 @@ public class BuildingManager : MonoBehaviour {
     private SwipeHandler _swipeHandler;
 
     private ObjectInteraction _selectedObject;
-    private BuildingFunctionType _currentBuildingFunctionType = BuildingFunctionType.None;
+    private BuildingFunctionTypes _currentBuildingFunctionType = BuildingFunctionTypes.None;
     private SwipeDirection _swipeDirection;
     private Vector3 _startMousePosition;
     private Vector3 _currentMousePosition;
@@ -42,7 +41,7 @@ public class BuildingManager : MonoBehaviour {
         else
             RemoveListeners();
 
-        _buildingMenuView.Activate(status);
+        _buildingMenuView.Show(status);
     }
 
     #region Subscriptions
@@ -70,7 +69,7 @@ public class BuildingManager : MonoBehaviour {
             return;
 
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            _currentBuildingFunctionType = BuildingFunctionType.None;
+            _currentBuildingFunctionType = BuildingFunctionTypes.None;
             return;
         }
 
@@ -104,15 +103,15 @@ public class BuildingManager : MonoBehaviour {
         if (_selectedObject == null)
             return;
 
-        if (_currentBuildingFunctionType == BuildingFunctionType.Rotate)
+        if (_currentBuildingFunctionType == BuildingFunctionTypes.Rotate)
             RotateSelectedObject();
 
-        if (_currentBuildingFunctionType == BuildingFunctionType.Scale)
+        if (_currentBuildingFunctionType == BuildingFunctionTypes.Scale)
             ScaleSelectedObject();
     }
 
     private bool CheckObjectInteraction() {
-        if (_currentBuildingFunctionType == BuildingFunctionType.None)
+        if (_currentBuildingFunctionType == BuildingFunctionTypes.None)
             return false;
 
         if (_selectorStatus == true && _selectedObject == null)
@@ -123,15 +122,15 @@ public class BuildingManager : MonoBehaviour {
 
     private void RunBuildingFunction() {
         switch (_currentBuildingFunctionType) {
-            case BuildingFunctionType.Move:
+            case BuildingFunctionTypes.Move:
                 MoveSelectedObject();
                 break;
 
-            case BuildingFunctionType.Rotate:
+            case BuildingFunctionTypes.Rotate:
                 //RotateSelectedObject();
                 break;
 
-            case BuildingFunctionType.Scale:
+            case BuildingFunctionTypes.Scale:
                 //ScaleSelectedObject();
                 break;
 
@@ -241,7 +240,7 @@ public class BuildingManager : MonoBehaviour {
             }
             else
             {
-                if (_currentBuildingFunctionType == BuildingFunctionType.Move) {
+                if (_currentBuildingFunctionType == BuildingFunctionTypes.Move) {
                     //Debug.Log("Ground!");
                     DeselectObject();
                     return;
@@ -269,7 +268,7 @@ public class BuildingManager : MonoBehaviour {
         }
     }
 
-    private void OnActivateBuildingFunctionTypeChanged(BuildingFunctionType type) {
+    private void OnActivateBuildingFunctionTypeChanged(BuildingFunctionTypes type) {
         Debug.Log("Menu item clicked: " + type);
         _currentBuildingFunctionType = type;
 

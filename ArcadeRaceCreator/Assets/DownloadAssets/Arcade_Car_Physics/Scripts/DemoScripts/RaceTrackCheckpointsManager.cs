@@ -1,10 +1,4 @@
-﻿/*
- * This code is part of Arcade Car Physics for Unity by Saarg (2018)
- * 
- * This is distributed under the MIT Licence (see LICENSE.md for details)
- */
-
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Serialization;
 using VehicleBehaviour;
 
@@ -16,7 +10,8 @@ public class RaceTrackCheckpointsManager : MonoBehaviour
 
     [SerializeField] CheckPointEvent[] checkPoints = new CheckPointEvent[0];
 
-    [FormerlySerializedAs("_ghost")] [SerializeField] Ghost ghost = default;
+    [FormerlySerializedAs("_ghost")]
+    [SerializeField] Ghost ghost = default;
     GhostRecorder recorder = default;
 
     void StartRace(WheelVehicle vehicle)

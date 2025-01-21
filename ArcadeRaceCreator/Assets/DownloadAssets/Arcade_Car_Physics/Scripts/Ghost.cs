@@ -64,7 +64,8 @@ namespace VehicleBehaviour
 		Rigidbody rb;
 		
 		// List of filenames to try to open on start
-		[FormerlySerializedAs("_saveFileNames")] [SerializeField] string[] saveFileNames = new string[0];
+		[FormerlySerializedAs("_saveFileNames")] 
+		[SerializeField] string[] saveFileNames = new string[0];
 
 		void Start () 
 		{

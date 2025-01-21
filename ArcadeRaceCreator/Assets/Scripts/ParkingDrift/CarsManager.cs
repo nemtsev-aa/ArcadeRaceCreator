@@ -5,11 +5,15 @@ using UnityEngine;
 public class CarsManager : MonoBehaviour {
     public event Action<Car> CurrentCarChanged;
 
-    [SerializeField] private List<Transform> _spawnPoints;
+    [SerializeField] private EnvironmentManager _environmentManager;
+    
+    [SerializeField] private CarConfigs _carConfigs;
     [SerializeField] private List<Car> _carPrefabs;
 
     private List<Car> _spawnedCars = new List<Car>();
     private Car _currentCar;
+
+    private List<Transform> _spawnPoints => _environmentManager.SpawnPoints;
 
     public void Init() {
         SpawnCars();

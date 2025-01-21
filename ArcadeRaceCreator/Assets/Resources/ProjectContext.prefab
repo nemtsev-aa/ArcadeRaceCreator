@@ -76,3 +76,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dialogPrefabs: {fileID: 11400000, guid: e4edcb73a5f597441ac05522264d0c10, type: 2}
   _uiCompanentPrefabs: {fileID: 11400000, guid: a4c2c11e0d5055f479bf27d96f99e2f9, type: 2}
+  _environmentConfigs: {fileID: 11400000, guid: 781b7fd603e70e04281cf48a19fd7a62, type: 2}
+  _carConfigs: {fileID: 11400000, guid: 2e9df86830826e34ba604b551c3d917e, type: 2}

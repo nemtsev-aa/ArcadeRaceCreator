@@ -1,55 +1,60 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class BuildingMenuView : MonoBehaviour {
-    public event Action<BuildingFunctionType> ActivateBuildingFunctionTypeChanged;
+public class BuildingMenuView : UICompanent, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler {
+    public event Action<BuildingMenuView> BuildingFunctionTypeSelected;
 
-    [SerializeField] private BuildingMenuItemConfigs _configs;
-    [SerializeField] private RectTransform _menuItemsParent;
-    [SerializeField] private BuildingMenuItem _buildingMenuItemPrefab;
+    [SerializeField] private Image _background;
+    [SerializeField] private Image _icon;
 
-    private List<BuildingMenuItem> _menuItems = new List<BuildingMenuItem>();
-    private BuildingMenuItemConfig _currentConfig;
-    private BuildingMenuItem _currentBuildingMenuItem;
+    [SerializeField] private Color _selectionColor;
+    [SerializeField] private Color _defaultColor;
+
+    public BuildingMenuViewConfig Config { get; private set; }
+
+    public void Init(BuildingMenuViewConfig config) {
+        Config = config;
+
+        UpdateCompanents();
+    }
 
     public void Activate(bool status) {
-        gameObject.SetActive(status);
-
-        if (status == true && _menuItems.Count == 0)
-            Create();
+        if (status == true)
+            Select();
+        else
+            UpdateCompanents();
     }
 
-    public void SetBuildingFunctionType(BuildingFunctionType type) {
-        _currentConfig = _configs.GetConfigByBuildingFunctionType(type);
-        BuildingMenuItem item = _menuItems.FirstOrDefault(i => i.Config.Type == type);
+    private void UpdateCompanents() {
+        _background.gameObject.SetActive(false);
 
-        OnBuildingFunctionTypeSelected(item);
+        _icon.sprite = Config.Icon;
+        _icon.color = _defaultColor;
     }
 
-    private void Create() {
-
-        foreach (BuildingMenuItemConfig iConfig in _configs.Configs) {
-            BuildingMenuItem item = Instantiate(_buildingMenuItemPrefab, _menuItemsParent);
-
-            item.Init(iConfig);
-            item.BuildingFunctionTypeSelected += OnBuildingFunctionTypeSelected;
-
-            _menuItems.Add(item);
-        }
+    public void OnPointerEnter(PointerEventData eventData) {
+        _icon.color = _selectionColor;
     }
 
-    private void OnBuildingFunctionTypeSelected(BuildingMenuItem item) {
-        if (_currentBuildingMenuItem != null && _currentBuildingMenuItem.Equals(item) != true) {
-            _currentBuildingMenuItem.Activate(false);
+    public void OnPointerExit(PointerEventData eventData) {
+        if (_background.gameObject.activeInHierarchy == true) {
+            _icon.color = _selectionColor;
+            return;
         }
 
-        _currentBuildingMenuItem = item;
-        _currentConfig = _configs.GetConfigByBuildingFunctionType(_currentBuildingMenuItem.Config.Type);
+        _icon.color = _defaultColor;
+    }
 
-        ActivateBuildingFunctionTypeChanged?.Invoke(_currentConfig.Type);
+    public void OnPointerClick(PointerEventData eventData) {
+        Select();
+    }
+
+    private void Select() {
+        _background.gameObject.SetActive(true);
+        _icon.color = _selectionColor;
+
+        BuildingFunctionTypeSelected?.Invoke(this);
     }
 }
-
-

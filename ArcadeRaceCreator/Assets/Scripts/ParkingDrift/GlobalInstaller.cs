@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -6,12 +7,15 @@ public class GlobalInstaller : MonoInstaller {
 
     [SerializeField] private DialogPrefabs _dialogPrefabs;
     [SerializeField] private UICompanentPrefabs _uiCompanentPrefabs;
+    [SerializeField] private EnvironmentConfigs _environmentConfigs;
+    [SerializeField] private CarConfigs _carConfigs;
 
     private Logger _logger;
 
     public override void InstallBindings() {
         BindTimeCounter();
         BindServices();
+        BuildConfigs();
 
         BindUIPrefabs();      
         BindFactories();
@@ -19,6 +23,7 @@ public class GlobalInstaller : MonoInstaller {
 
         _logger.Log("Global Installing Complited");
     }
+
     private void BindTimeCounter() {
         TimeCounter timeCounter = new TimeCounter();
 
@@ -32,6 +37,18 @@ public class GlobalInstaller : MonoInstaller {
 
         Container.Bind<PauseHandler>().AsSingle();
         Container.Bind<SoundsLoader>().AsSingle();
+    }
+
+    private void BuildConfigs() {
+        if (_environmentConfigs.Configs.Count == 0)
+            _logger.Log($"List of EnvironmentConfigs is empty");
+
+        Container.Bind<EnvironmentConfigs>().FromInstance(_environmentConfigs).AsSingle();
+
+        if (_carConfigs.Configs.Count == 0)
+            _logger.Log($"List of CarConfigs is empty");
+
+        Container.Bind<CarConfigs>().FromInstance(_carConfigs).AsSingle();
     }
 
     private void BindUIPrefabs() {

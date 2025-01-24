@@ -5,7 +5,7 @@ using UnityEngine;
 using Zenject;
 
 public class CarsTypePanel : UIPanel {
-    public event Action<List<CarConfig>> CarsListChanged;
+    public event Action<CarTypes, List<CarConfig>> CarsListChanged;
 
     [SerializeField] private RectTransform _viewParent;
 
@@ -60,6 +60,6 @@ public class CarsTypePanel : UIPanel {
         _currentCarsTypeView = item;
         _currentConfig = _configs.GetCarConfigsByType(_currentCarsTypeView.Config.Type);
 
-        CarsListChanged?.Invoke(_currentConfig);
+        CarsListChanged?.Invoke(_currentCarsTypeView.Config.Type, _currentConfig);
     }
 }

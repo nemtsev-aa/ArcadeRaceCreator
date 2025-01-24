@@ -717,7 +717,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7165326767597133665}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Lampposts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -925,7 +925,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8963663387701163615}
   - {fileID: 7191287335448953307}
   - {fileID: 3209745055996683927}
   - {fileID: 7165326767597133665}
@@ -1550,7 +1549,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7191287335448953307}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cones
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1777,6 +1776,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8963663387701163615}
   - {fileID: 7892526010293540272}
   - {fileID: 1837002766820955711}
   m_Father: {fileID: 0}
@@ -1793,10 +1793,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26a6dbb471c77874eaa77eef751f31bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interactionObjectsParent: {fileID: 7892526010293540272}
+  <Type>k__BackingField: 0
   SpawnPoints:
   - {fileID: 4309574458332668491}
   - {fileID: 1386727384714189987}
   - {fileID: 2367486874115819384}
+  <ObjectInteractions>k__BackingField: []
 --- !u!1 &5029858127718624777
 GameObject:
   m_ObjectHideFlags: 0
@@ -4288,7 +4291,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3209745055996683927}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Street_Bumps
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4631,12 +4634,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8655902132188696785}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7892526010293540272}
+  m_Father: {fileID: 6370428156702184834}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &651702864418682981
 Rigidbody:

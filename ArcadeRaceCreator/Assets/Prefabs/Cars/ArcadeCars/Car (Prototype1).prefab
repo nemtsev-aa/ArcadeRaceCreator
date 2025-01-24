@@ -1323,6 +1323,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SelectionView
       objectReference: {fileID: 0}
+    - target: {fileID: 4750512424513402166, guid: 6ba18c6b19ec7444d80c54e7dbc72344, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -2,5 +2,6 @@
     Move,
     Rotate,
     Scale,
-    None
+    None,
+    Save
 }

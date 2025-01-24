@@ -1,7 +1,7 @@
 using System;
 
 public class EnvironmentEditorDialog : Dialog {
-    public event Action<BuildingFunctionTypes> BuildingFunctionTypesChanged;
+    public static event Action ApplyClicked;
 
     private BuildingMenuPanel _buildingMenuPanel;
 
@@ -20,16 +20,21 @@ public class EnvironmentEditorDialog : Dialog {
     public override void AddListeners() {
         base.AddListeners();
 
+        ApplyButton.onClick.AddListener(ApplyButtonButtonClick);
         _buildingMenuPanel.ActivateBuildingFunctionTypeChanged += OnActivateBuildingFunctionTypeChanged;
     }
 
     public override void RemoveListeners() {
         base.RemoveListeners();
 
+        ApplyButton.onClick.RemoveListener(ApplyButtonButtonClick);
         _buildingMenuPanel.ActivateBuildingFunctionTypeChanged -= OnActivateBuildingFunctionTypeChanged;
     }
 
+    private void ApplyButtonButtonClick() => ApplyClicked?.Invoke();
+
     private void OnActivateBuildingFunctionTypeChanged(BuildingFunctionTypes type) {
-        BuildingFunctionTypesChanged?.Invoke(type);
+        if (type == BuildingFunctionTypes.Save)
+            ApplyButton.gameObject.SetActive(true);
     }
 }

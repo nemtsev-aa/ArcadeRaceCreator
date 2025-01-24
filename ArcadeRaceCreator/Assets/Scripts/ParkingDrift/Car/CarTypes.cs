@@ -1,5 +1,6 @@
 ﻿public enum CarTypes {
     Arcade,
     Rally,
-    Soviet
+    Soviet,
+    None
 }

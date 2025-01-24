@@ -5,13 +5,5 @@
     void RemoveLisener();
     void StartGamePlay();
     void FinishGameplay(Switchovers switchover);
-    void ShowRewarded();
-}
-
-public enum Switchovers {
-    MainMenu,
-    CurrentLevel,
-    NextLevel,
-    AnotherGameMod
-}
+ }
 

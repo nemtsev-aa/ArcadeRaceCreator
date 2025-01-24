@@ -8,8 +8,10 @@ public class Bootstrap : MonoBehaviour {
 
     [SerializeField] private ApplicationManager _applicationManager;
     [SerializeField] private UIManager _uIManager;
-    [SerializeField] private EnvironmentSoundManager _environmentSoundManager;
-    [SerializeField] private CarSFXManager _carSFXManager;
+    //[SerializeField] 
+    private EnvironmentSoundManager _environmentSoundManager;
+    //[SerializeField] 
+    private CarSFXManager _carSFXManager;
 
     private Logger _logger;
     private SoundsLoader _soundsLoader;
@@ -25,14 +27,13 @@ public class Bootstrap : MonoBehaviour {
     }
 
     private async UniTask Init() {
-        // Показать экран загрузки
-
         _logger.Log("Bootstrap Init");
 
-        await SoundsLoading();
+        //await SoundsLoading();
 
         _logger.Log("ApplicationManager Init");
-        _applicationManager.Init(_uIManager, _environmentSoundManager, _carSFXManager);
+        //_applicationManager.Init(_uIManager, _environmentSoundManager, _carSFXManager);
+        _applicationManager.Init(_uIManager);
 
         _logger.Log("Bootstrap Complited");
     }

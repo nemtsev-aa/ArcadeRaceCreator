@@ -9,10 +9,11 @@ public class Car : MonoBehaviour, IDisposable {
 
     [field: SerializeField] public Transform CameraAnker { get; private set; }
     [field: SerializeField] public AnimatorEventsHandler EventsHandler { get; private set; }
+    
     public void Init() {
         _carController.enabled = false;
 
-        _selectionView.Selected += OnSelected;
+        Prepare(false);     
     }
 
     public void Show(bool status) {
@@ -20,8 +21,15 @@ public class Car : MonoBehaviour, IDisposable {
 
         if (status == false)
             Activate(false);
+    }
+
+    public void Prepare(bool status) {
+        _selectionView.gameObject.SetActive(status);
+
+        if (status)
+            _selectionView.Selected += OnSelected;
         else
-            _selectionView.gameObject.SetActive(true);
+            _selectionView.Selected -= OnSelected;
     }
 
     public void Activate(bool status) {

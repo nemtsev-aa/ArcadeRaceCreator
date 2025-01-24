@@ -1,29 +1,84 @@
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Zenject;
 
 public class ProjectStagesPanel : UIPanel {
     public event Action<ProjectStageTypes> ProjectStageTypesChanged;
 
-    [SerializeField] private List<ProjectStageView> _views;
+    [SerializeField] private RectTransform _viewParent;
     private float _animationDuration = 0.3f;
+
+    private ProjectStageConfigs _configs;
+    private UICompanentsFactory _factory;
+
+    private List<ProjectStageView> _views;
+    private ProjectStageView _currentView;
+
+    [Inject]
+    public void Construct(ProjectStageConfigs configs, UICompanentsFactory factory) {
+        _configs = configs;
+        _factory = factory;
+    }
+
+    public void Init() {
+        AddListeners();
+        _views = new List<ProjectStageView>();
+    }
 
     public override void Show(bool value) {
         base.Show(value);
 
-        if (value == true && _views.Count == 0) {
-            AddListeners();
-            ShowProjectStageViews();
-        }
+        if (value == true) {
+
+            if (_views.Count > 0) {
+                ShowProjectStageViews();
+                return;
+            }
+
+            CreateProjectStageViews();
+        } 
+    }
+
+    public void Prepare(ProjectStageTypes type) {
 
     }
-    public override void AddListeners() {
-        base.AddListeners();
 
-        foreach (ProjectStageView iView in _views) {
-            iView.ProjectStageViewSelected += OnProjectStageViewSelected;
-            iView.transform.localScale = Vector3.zero;
+    public void ShowProjectStageViewByType(ProjectStageTypes type) {
+        if (_currentView != null)
+            _currentView.SetState(ProjectStageState.TrueVerification);
+
+        var view = _views.FirstOrDefault(t => t.Config.Type == type);
+        view.SetState(ProjectStageState.Select);
+
+        _currentView = view;
+    }
+
+    public void SetVerificationResultFromCurrentView(bool status) {
+        if (_currentView == null)
+            return;
+
+        if (status)
+            _currentView.SetState(ProjectStageState.TrueVerification);
+        else
+            _currentView.SetState(ProjectStageState.FalseVerification);
+    }
+
+    private void CreateProjectStageViews() {
+        if (_configs.Configs.Count == 0)
+            return;
+
+        foreach (ProjectStageConfig iConfig in _configs.Configs) {
+            ProjectStageViewConfig newViewConfig = new ProjectStageViewConfig(iConfig);
+            ProjectStageView newView = _factory.Get<ProjectStageView>(newViewConfig, _viewParent);
+
+            newView.Init(newViewConfig);
+            newView.ProjectStageViewSelected += OnProjectStageViewSelected;
+
+            _views.Add(newView);
         }
     }
 
@@ -36,9 +91,14 @@ public class ProjectStagesPanel : UIPanel {
         }
     }
 
-    private void ShowProjectStageViews() {
+    private async UniTask ShowProjectStageViews() {
+        if (_views.Count == 0)
+            return;
+
         foreach (ProjectStageView iView in _views) {
-            iView.transform.DOScale(Vector3.one, _animationDuration).SetDelay(_animationDuration * 1.1f);
+            iView.transform.localScale = Vector3.zero;
+            iView.transform.DOScale(Vector3.one, _animationDuration);
+            await UniTask.Delay(10);
         }
     }
 

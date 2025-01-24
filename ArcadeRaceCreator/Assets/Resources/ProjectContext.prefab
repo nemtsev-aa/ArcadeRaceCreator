@@ -76,5 +76,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dialogPrefabs: {fileID: 11400000, guid: e4edcb73a5f597441ac05522264d0c10, type: 2}
   _uiCompanentPrefabs: {fileID: 11400000, guid: a4c2c11e0d5055f479bf27d96f99e2f9, type: 2}
+  _projectStageConfigs: {fileID: 11400000, guid: 5fa581bf65400bc4689f3e3a115653e0, type: 2}
   _environmentConfigs: {fileID: 11400000, guid: 781b7fd603e70e04281cf48a19fd7a62, type: 2}
+  _buildingMenuItemConfigs: {fileID: 11400000, guid: 1e9d3da87685fb54185993735a57aaf9, type: 2}
+  _equationConfigs: {fileID: 11400000, guid: b2258044189f7d948b287f1e121c0f70, type: 2}
+  _accordanceCompanentConfig: {fileID: 11400000, guid: 85e1e0497f1930547b2f37405de8e8e0, type: 2}
   _carConfigs: {fileID: 11400000, guid: 2e9df86830826e34ba604b551c3d917e, type: 2}

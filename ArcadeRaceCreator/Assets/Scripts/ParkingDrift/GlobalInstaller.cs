@@ -7,8 +7,13 @@ public class GlobalInstaller : MonoInstaller {
 
     [SerializeField] private DialogPrefabs _dialogPrefabs;
     [SerializeField] private UICompanentPrefabs _uiCompanentPrefabs;
+    [SerializeField] private ProjectStageConfigs _projectStageConfigs;
     [SerializeField] private EnvironmentConfigs _environmentConfigs;
+    [SerializeField] private BuildingMenuItemConfigs _buildingMenuItemConfigs;
+    [SerializeField] private EquationConfigs _equationConfigs;
+    [SerializeField] private AccordanceCompanentConfig _accordanceCompanentConfig;
     [SerializeField] private CarConfigs _carConfigs;
+    
 
     private Logger _logger;
 
@@ -17,7 +22,8 @@ public class GlobalInstaller : MonoInstaller {
         BindServices();
         BuildConfigs();
 
-        BindUIPrefabs();      
+        BindUIPrefabs();
+        BindLineSpawner();
         BindFactories();
         BindInput();
 
@@ -40,15 +46,37 @@ public class GlobalInstaller : MonoInstaller {
     }
 
     private void BuildConfigs() {
+        if (_projectStageConfigs.Configs.Count == 0)
+            _logger.Log($"List of ProjectStageConfigs is empty");
+
+        Container.Bind<ProjectStageConfigs>().FromInstance(_projectStageConfigs).AsSingle();
+
         if (_environmentConfigs.Configs.Count == 0)
             _logger.Log($"List of EnvironmentConfigs is empty");
 
         Container.Bind<EnvironmentConfigs>().FromInstance(_environmentConfigs).AsSingle();
+        
+        if (_buildingMenuItemConfigs.Configs.Count == 0)
+            _logger.Log($"List of BuildingMenuItemConfigs is empty");
+
+        Container.Bind<BuildingMenuItemConfigs>().FromInstance(_buildingMenuItemConfigs).AsSingle();
 
         if (_carConfigs.Configs.Count == 0)
             _logger.Log($"List of CarConfigs is empty");
 
         Container.Bind<CarConfigs>().FromInstance(_carConfigs).AsSingle();
+
+        if (_equationConfigs.Configs.Count == 0)
+            _logger.Log($"List of EquationConfigs is empty");
+
+        Container.Bind<EquationConfigs>().FromInstance(_equationConfigs).AsSingle();
+
+        if (_accordanceCompanentConfig.FalseVerificationColor == null)
+            _logger.Log($"FalseVerificationColor is empty");
+
+        Container.Bind<AccordanceCompanentConfig>().FromInstance(_accordanceCompanentConfig).AsSingle();
+
+        
     }
 
     private void BindUIPrefabs() {
@@ -68,6 +96,14 @@ public class GlobalInstaller : MonoInstaller {
         Container.Bind<UICompanentsFactory>().AsSingle();
     }
 
+    private void BindLineSpawner() {
+        LineFactory factory = new LineFactory(Container);
+        Container.Bind<LineFactory>().FromInstance(factory).AsSingle();
+
+        LineSpawner lineSpawner = new LineSpawner(factory, _accordanceCompanentConfig);
+        Container.Bind<LineSpawner>().AsSingle().NonLazy();
+    }
+
     private void BindInput() {
         if (SystemInfo.deviceType == DeviceType.Handheld)
             Container.BindInterfacesAndSelfTo<MobileInput>().AsSingle();
@@ -75,5 +111,6 @@ public class GlobalInstaller : MonoInstaller {
             Container.BindInterfacesAndSelfTo<DesktopInput>().AsSingle();
 
         Container.Bind<SwipeHandler>().AsSingle().NonLazy();
+        Container.Bind<MovementHandler>().AsSingle().NonLazy();
     }
 }

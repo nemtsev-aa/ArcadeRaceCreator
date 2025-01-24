@@ -37,6 +37,7 @@ public class EnvironmentTypePanel : UIPanel {
     public void SetEnvironmentType(EnvironmentTypes type) {
         _currentConfig = _configs.GetEnvironmentConfigByType(type);
         EnvironmentTypeView item = _viewItems.FirstOrDefault(i => i.Config.Type == type);
+        item.Activate(true);
 
         OnEnvironmentTypeViewSelected(item);
     }

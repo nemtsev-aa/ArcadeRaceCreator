@@ -15,7 +15,7 @@ MonoBehaviour:
   Configs:
   - <Type>k__BackingField: 0
     <Name>k__BackingField: "\u041F\u0435\u0440\u0435\u043C\u0435\u0449\u0435\u043D\u0438\u0435"
-    <Description>k__BackingField: "\u0421\u0434\u0432\u0438\u0433 \u043E\u0431\u044A\u0435\u043A\u0442\u0430"
+    <Description>k__BackingField: 
     <Icon>k__BackingField: {fileID: 21300000, guid: 15dab1e1662e67841b153a1613504db4, type: 3}
   - <Type>k__BackingField: 1
     <Name>k__BackingField: "\u041F\u043E\u0432\u043E\u0440\u043E\u0442"
@@ -25,3 +25,7 @@ MonoBehaviour:
     <Name>k__BackingField: "\u041C\u0430\u0441\u0448\u0442\u0430\u0431"
     <Description>k__BackingField: 
     <Icon>k__BackingField: {fileID: 21300000, guid: 80cbff4a0bcffe44996dea9d6f9f52a8, type: 3}
+  - <Type>k__BackingField: 4
+    <Name>k__BackingField: "\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435"
+    <Description>k__BackingField: 
+    <Icon>k__BackingField: {fileID: 21300000, guid: 410f4bd7b87034c4bb26c6189b0c34e4, type: 3}

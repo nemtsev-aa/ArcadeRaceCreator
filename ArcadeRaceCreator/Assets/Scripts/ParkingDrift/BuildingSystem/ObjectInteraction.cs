@@ -15,7 +15,14 @@ public class ObjectInteraction : MonoBehaviour {
         _meshCollider.enabled = !status;
         //_rigidbody.isKinematic = !status;
         //_rigidbody.useGravity = status;
+    }
 
-        Debug.Log($"{gameObject.name} selected {status}");
+    public ObjectInteractionData GetData() {
+        return new ObjectInteractionData(
+            gameObject.name,
+            transform.position,
+            transform.localEulerAngles,
+            transform.localScale
+            );
     }
 }

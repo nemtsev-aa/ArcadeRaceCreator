@@ -3,14 +3,18 @@ using UnityEngine;
 using Zenject;
 
 public class MobileInput : ITickable, IInput {
-    
     public event Action<Vector3> StartSwiping;
     public event Action<Vector3> ProgressSwiping;
     public event Action SwipeDown;
     public event Action SwipeUp;
     public event Action SwipeRight;
     public event Action SwipeLeft;
+
     public event Action<bool> SelectorPressed;
+
+    public event Action<Vector3> ClickDown;
+    public event Action<Vector3> ClickUp;
+    public event Action<Vector3> Drag;
 
     private const int FirstTouch = 0;
 

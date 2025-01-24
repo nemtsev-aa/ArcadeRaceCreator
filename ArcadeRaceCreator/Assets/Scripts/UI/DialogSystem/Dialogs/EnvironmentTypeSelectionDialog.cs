@@ -1,15 +1,19 @@
 ﻿using System;
 
 public class EnvironmentTypeSelectionDialog : Dialog {
-    public event Action<EnvironmentConfig> EnvironmentConfigSelected;
+    public static event Action ApplyClicked;
+    public static event Action<EnvironmentTypes> EnvironmentTypeSelected;
 
     private EnvironmentTypePanel _environmentTypePanel;
+
+    public EnvironmentConfig Config { get; private set; }
 
     public override void Show(bool value) {
         base.Show(value);
 
         if (true) {
             _environmentTypePanel.Show(true);
+            _environmentTypePanel.SetEnvironmentType(EnvironmentTypes.Parking);
         }
     }
 
@@ -21,16 +25,26 @@ public class EnvironmentTypeSelectionDialog : Dialog {
     public override void AddListeners() {
         base.AddListeners();
 
+        ApplyButton.onClick.AddListener(ApplyButtonButtonClick);
         _environmentTypePanel.EnvironmentTypeChanged += OnEnvironmentTypeChanged;
+
     }
 
     public override void RemoveListeners() {
         base.RemoveListeners();
 
+        ApplyButton.onClick.RemoveListener(ApplyButtonButtonClick);
         _environmentTypePanel.EnvironmentTypeChanged -= OnEnvironmentTypeChanged;
     }
 
+    private void ApplyButtonButtonClick() => ApplyClicked?.Invoke();
+
     private void OnEnvironmentTypeChanged(EnvironmentConfig config) {
-        EnvironmentConfigSelected?.Invoke(config);
+        if (ApplyButton.gameObject.activeInHierarchy == false)
+            ApplyButton.gameObject.SetActive(true);
+
+        Config = config;
+
+        EnvironmentTypeSelected?.Invoke(config.Type);
     }
 }

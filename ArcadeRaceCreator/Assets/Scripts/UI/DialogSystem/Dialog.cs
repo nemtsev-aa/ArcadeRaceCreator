@@ -10,12 +10,13 @@ public class Dialog : MonoBehaviour, IDisposable {
 
     [SerializeField] protected Button BackButton;
     [SerializeField] protected Button SettingsButton;
+    [SerializeField] protected Button ApplyButton;
 
     [SerializeField] protected List<UIPanel> Panels = new List<UIPanel>();
 
     public bool IsInit { get; protected set; } = false;
     public IReadOnlyList<UIPanel> DialogPanels => Panels;
-    
+
     public virtual void Init() {
         if (IsInit == true)
             return;
@@ -49,9 +50,13 @@ public class Dialog : MonoBehaviour, IDisposable {
     public virtual void AddListeners() {
         if (BackButton != null)
             BackButton.onClick.AddListener(BackButtonClick);
-        
+
         if (SettingsButton != null)
             SettingsButton.onClick.AddListener(SettingsButtonClick);
+
+        if (ApplyButton != null) {
+            ApplyButton.gameObject.SetActive(false);
+        }
     }
 
     public virtual void RemoveListeners() {
@@ -64,7 +69,11 @@ public class Dialog : MonoBehaviour, IDisposable {
     }
 
     public virtual void InitializationPanels() {
-    
+
+    }
+
+    public virtual void PreparingForClosure() {
+
     }
 
     private void BackButtonClick() {
@@ -74,6 +83,7 @@ public class Dialog : MonoBehaviour, IDisposable {
     }
 
     private void SettingsButtonClick() => SettingsClicked?.Invoke();
+
 
     public void Dispose() {
         RemoveListeners();

@@ -32,6 +32,7 @@ public class BuildingMenuPanel : UIPanel {
     public void SetBuildingFunctionType(BuildingFunctionTypes type) {
         _currentConfig = _configs.GetConfigByBuildingFunctionType(type);
         BuildingMenuView item = _menuItems.FirstOrDefault(i => i.Config.Type == type);
+        item.Activate(true);
 
         OnBuildingFunctionTypeSelected(item);
     }

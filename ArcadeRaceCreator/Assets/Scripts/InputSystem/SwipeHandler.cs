@@ -46,6 +46,7 @@ public class SwipeHandler : IPause, IDisposable {
     private void OnSwiping(Vector3 mousePosition) {
         _currentMousePosition = mousePosition;
 
+        PointerPositionChanged?.Invoke(_currentMousePosition);
         //Debug.Log($"OnSwiping - StartPosition: {_startPosition}");
         //Debug.Log($"OnSwiping - MousePosition: {_currentMousePosition}");
 

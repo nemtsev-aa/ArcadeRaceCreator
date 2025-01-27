@@ -30,19 +30,19 @@ MonoBehaviour:
     <Icon>k__BackingField: {fileID: 21300000, guid: 7ac0c7e4b6339af4d9441038c87be1ab, type: 3}
     <Configs>k__BackingField:
     - <Name>k__BackingField: Ford
-      <Prefab>k__BackingField: {fileID: 1822598916070863920, guid: f11f0f2b66ea38c429ba5132de87fe61, type: 3}
+      <Prefab>k__BackingField: {fileID: 2500169718361335986, guid: 3d1a9cba0c446754ba0d3ee90396fdb8, type: 3}
     - <Name>k__BackingField: Lanacia
-      <Prefab>k__BackingField: {fileID: 6607469202696014128, guid: 1767d2c4c4b243e49897c3b52d20796e, type: 3}
+      <Prefab>k__BackingField: {fileID: 6431738950933255950, guid: 610bd3d5b38b8d54aa658bcaa257c21b, type: 3}
     - <Name>k__BackingField: Suzoki
-      <Prefab>k__BackingField: {fileID: 4383232504186759429, guid: a47e91344d698a543a790589b8103265, type: 3}
+      <Prefab>k__BackingField: {fileID: 5617288409269851011, guid: 82f4e803477271f478b170a4315577c3, type: 3}
   - <Type>k__BackingField: 2
     <Name>k__BackingField: "\u041E\u0442\u0435\u0447\u0435\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0435"
     <Description>k__BackingField: 
     <Icon>k__BackingField: {fileID: 21300000, guid: d3272509ca9604847a04d2b93f25091c, type: 3}
     <Configs>k__BackingField:
     - <Name>k__BackingField: VAZ5
-      <Prefab>k__BackingField: {fileID: 4285450546008542092, guid: 3637c96bc95896e4b8c698b7225002fb, type: 3}
+      <Prefab>k__BackingField: {fileID: 4285450546008542092, guid: 3ca57445c555014438ca904a45be1e99, type: 3}
     - <Name>k__BackingField: VAZ9
-      <Prefab>k__BackingField: {fileID: 1238270350285140100, guid: 365b22b5ea136a747bf3aa5ca7ba0dc5, type: 3}
+      <Prefab>k__BackingField: {fileID: 1238270350285140100, guid: f998cd65a68dca6478442fe1048a49fd, type: 3}
     - <Name>k__BackingField: VAZ99
-      <Prefab>k__BackingField: {fileID: 4634372371666597286, guid: b61c9bf4b607351429c1f28c8be04f86, type: 3}
+      <Prefab>k__BackingField: {fileID: 4634372371666597286, guid: 01fb88555837dc3459785211460cd43e, type: 3}

@@ -13,7 +13,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PrometeoCarController : MonoBehaviour {
-
+    public event Action<int> AbsoluteCarSpeedChaned;
     //CAR SETUP
 
     [Space(20)]
@@ -371,12 +371,13 @@ public class PrometeoCarController : MonoBehaviour {
     }
 
     // This method converts the car speed data from float to string, and then set the text of the UI carSpeedText with this value.
+    
     public void CarSpeedUI() {
 
         if (useUI) {
             try {
                 float absoluteCarSpeed = Mathf.Abs(carSpeed);
-                carSpeedText.text = Mathf.RoundToInt(absoluteCarSpeed).ToString();
+                AbsoluteCarSpeedChaned?.Invoke(Mathf.RoundToInt(absoluteCarSpeed));
             }
             catch (Exception ex) {
                 Debug.LogWarning(ex);

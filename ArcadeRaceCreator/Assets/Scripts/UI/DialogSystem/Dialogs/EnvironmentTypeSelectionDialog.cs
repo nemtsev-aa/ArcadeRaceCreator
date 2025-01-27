@@ -13,7 +13,6 @@ public class EnvironmentTypeSelectionDialog : Dialog {
 
         if (true) {
             _environmentTypePanel.Show(true);
-            _environmentTypePanel.SetEnvironmentType(EnvironmentTypes.Parking);
         }
     }
 

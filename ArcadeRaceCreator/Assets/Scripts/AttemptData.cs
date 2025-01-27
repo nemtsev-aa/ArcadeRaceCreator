@@ -7,6 +7,7 @@ public class AttemptData {
     public EnvironmentEditorData EnvironmentEditorData { get; private set; }
     public CarTypes CarType { get; private set; }
     public CodingMiniGameResult MiniGameResult { get; private set; }
+    public GameplayResult GameplayResult { get; private set; }
 
     public void SetEnvironmentType(EnvironmentTypes environmentType) {
         EnvironmentType = environmentType;
@@ -23,4 +24,9 @@ public class AttemptData {
     public void SetCodingMiniGameResult(CodingMiniGameResult result) {
         MiniGameResult = result;
     }
+
+    public void SetGameplayResult(GameplayResult result) {
+        GameplayResult = result;
+    }
+    
 }

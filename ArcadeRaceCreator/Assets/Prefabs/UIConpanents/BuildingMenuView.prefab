@@ -183,14 +183,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1109827936834872612}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b579cfc0d939c34d9fd25a26ba1fb3a, type: 3}
+  m_Script: {fileID: 11500000, guid: 6dfdae8170326d7469026f4aed4cbff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _background: {fileID: 8509044314664321898}
   _icon: {fileID: 3508306357415518004}
   _nameLabel: {fileID: 2764450767619015751}
   _selectionColor: {r: 1, g: 1, b: 1, a: 1}
-  _defaultColor: {r: 0.6039216, g: 0.6039216, b: 0.6039216, a: 1}
+  _defaultColor: {r: 0.754717, g: 0.754717, b: 0.754717, a: 1}
 --- !u!1 &6903979928694642653
 GameObject:
   m_ObjectHideFlags: 0

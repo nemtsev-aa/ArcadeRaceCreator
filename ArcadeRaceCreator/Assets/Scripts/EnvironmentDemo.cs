@@ -18,6 +18,7 @@ public class EnvironmentDemo : Manager {
                 _rotationAnimation.Kill();
 
             transform.DORotate(Vector3.zero, _animationDuration);
+            return;
         }
     }
 
@@ -32,6 +33,7 @@ public class EnvironmentDemo : Manager {
         if (newManager != null) {
             CurrentEnvironmentManager = newManager;
             CurrentEnvironmentManager.gameObject.SetActive(true);
+            CurrentEnvironmentManager.Init();
         }
 
         if (_rotationAnimation != null && _rotationAnimation.IsPlaying() == true) {

@@ -8,11 +8,6 @@ public class CameraFollow : Manager {
 	[Range(1, 10)] public float followSpeed = 2;
 	[Range(1, 10)] public float lookSpeed = 5;
 
-	public float zoomSpeed = 10f; // Скорость зума
-	public float minDistance = 3f; // Минимальное расстояние камеры
-	public float maxDistance = 20f; // Максимальное расстояние камеры
-	public float moveOffset = 10f;
-
 	private Vector3 _initialCameraPosition;
 	private Vector3 _initialCarPosition;
 	private Vector3 _absoluteInitCameraPosition;
@@ -45,5 +40,7 @@ public class CameraFollow : Manager {
 		//Move to car
 		Vector3 _targetPos = _absoluteInitCameraPosition + carTransform.transform.position;
 		transform.position = Vector3.Lerp(transform.position, _targetPos, followSpeed * Time.deltaTime);
+
+		transform.Translate(0f, 0f, Input.mouseScrollDelta.y);
 	}
 }

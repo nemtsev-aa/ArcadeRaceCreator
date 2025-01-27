@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using Zenject;
 
-public class BuildingMenuPanel : UIPanel {
+public class EnvironmentEditorMenuPanel : UIPanel {
     public event Action<BuildingFunctionTypes> ActivateBuildingFunctionTypeChanged;
 
     [SerializeField] private RectTransform _menuItemsParent;

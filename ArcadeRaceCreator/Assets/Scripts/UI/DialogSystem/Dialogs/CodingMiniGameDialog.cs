@@ -8,7 +8,6 @@ public class CodingMiniGameDialog : Dialog {
     public static event Action ApplyClicked;
     public event Action<float, float> EquationsCountChanged;
 
-
     private EquationConfigs _configs;
     private AccordancePanel _accordancePanel;
     private EquationCountPanel _equationCountPanel;

@@ -1,7 +1,11 @@
 using System;
 using UnityEngine;
 
-public class CameraMove : Manager {
+public class CameraMoveController : Manager {
+    public event Action Moved;
+    public event Action Zoomed;
+    public event Action Rotated;
+
     public Camera RaycastCamera;
     [Tooltip("Дистанция до цели")]
     public float DistanceToTarget = 50f;
@@ -12,6 +16,8 @@ public class CameraMove : Manager {
     public float SideBorderSize = 20f;
     [Tooltip("Скорость камеры")]
     public float MoveSpeed = 10f;
+    [Tooltip("Точность камеры")]
+    public float MouseSensetivity = 1f;
 
     private Vector3 _startPoint;
     private Vector3 _cameraStartPosition;
@@ -41,19 +47,14 @@ public class CameraMove : Manager {
         _targetPostion = targetPosition;
     }
 
-    private void Update() {
-        if (IsActive == false)
-            return;
-
-        MoveToRaycastHit();
-    }
-
-    void LateUpdate() {
+    void FixedUpdate() {
         if (IsActive == false)
             return;
 
         MoveToTarget();
+        MoveToRaycastHit();
         MoveToWhileEdgeScreen();
+        RotateY();
     }
 
     private void MoveToTarget() {
@@ -76,18 +77,40 @@ public class CameraMove : Manager {
         _plane.Raycast(ray, out distance);
         Vector3 point = ray.GetPoint(distance);
 
-        if (Input.GetMouseButtonDown(2)) {
-            _startPoint = point;
-            _cameraStartPosition = transform.position;
-        }
+        //if (Input.GetMouseButtonDown(2)) {
+        //    _startPoint = point;
+        //    _cameraStartPosition = transform.position;
 
-        if (Input.GetMouseButton(2)) {
-            Vector3 offset = point - _startPoint;
-            transform.position = _cameraStartPosition - offset;
-        }
+        //    Moved?.Invoke();
+        //}
+
+        //if (Input.GetMouseButton(2)) {
+        //    Vector3 offset = point - _startPoint;
+        //    Vector3 newPosition = _cameraStartPosition + offset;
+
+        //    transform.position = newPosition;
+        //}
+
+        if (Input.GetAxis("Mouse ScrollWheel") >= 0.1f || Input.GetAxis("Mouse ScrollWheel") < 0f)
+            Zoomed?.Invoke();
+
 
         transform.Translate(0f, 0f, Input.mouseScrollDelta.y);
         RaycastCamera.transform.Translate(0f, 0f, Input.mouseScrollDelta.y);
+    }
+
+    private void RotateY() {
+
+        if (Input.GetMouseButtonDown(1)) {
+            Rotated?.Invoke();
+        }
+
+        if (Input.GetMouseButton(1)) {
+            //float rotateX = Input.GetAxisRaw("Mouse Y") * -MouseSensetivity;
+            float rotateY = Input.GetAxis("Mouse X") * MouseSensetivity;
+
+            transform.parent.Rotate(0f, rotateY, 0f);
+        }
     }
 
     private void MoveToWhileEdgeScreen() {

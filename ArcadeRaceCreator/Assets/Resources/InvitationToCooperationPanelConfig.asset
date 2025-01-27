@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ebc98358f8ad414283db405f1be168b, type: 3}
+  m_Name: InvitationToCooperationPanelConfig
+  m_EditorClassIdentifier: 
+  <QR_GIT>k__BackingField: {fileID: 21300000, guid: 5485cec4e5750594692d9c9646c0a4b8, type: 3}
+  <QR_Build>k__BackingField: {fileID: 21300000, guid: ca964a71914616447adab12811833514, type: 3}
+  <QR_Kvantorium>k__BackingField: {fileID: 21300000, guid: 1c34981726a2b894e9815085112de7c7, type: 3}
+  <QR_Lector>k__BackingField: {fileID: 21300000, guid: 5f1a336552c561347a3d4cf62ea37733, type: 3}

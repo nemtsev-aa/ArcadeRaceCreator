@@ -3,7 +3,9 @@ using System;
 public class EnvironmentEditorDialog : Dialog {
     public static event Action ApplyClicked;
 
-    private BuildingMenuPanel _buildingMenuPanel;
+    private EnvironmentEditorMenuPanel _buildingMenuPanel;
+    private CameraControllsPanel _controllsPanel;
+    private ApplicationManager _applicationManager;
 
     public override void Show(bool value) {
         base.Show(value);
@@ -14,7 +16,8 @@ public class EnvironmentEditorDialog : Dialog {
     }
 
     public override void InitializationPanels() {
-        _buildingMenuPanel = GetPanelByType<BuildingMenuPanel>();
+        _buildingMenuPanel = GetPanelByType<EnvironmentEditorMenuPanel>();
+        _controllsPanel = GetPanelByType<CameraControllsPanel>();
     }
 
     public override void AddListeners() {
@@ -37,4 +40,6 @@ public class EnvironmentEditorDialog : Dialog {
         if (type == BuildingFunctionTypes.Save)
             ApplyButton.gameObject.SetActive(true);
     }
+
+ 
 }

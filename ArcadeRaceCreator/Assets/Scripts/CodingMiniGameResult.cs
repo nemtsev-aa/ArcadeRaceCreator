@@ -11,3 +11,12 @@ public class CodingMiniGameResult {
     public List<EquationConfig> Equation { get; private set; }
     public bool Status { get; private set; }
 }
+
+[Serializable]
+public class GameplayResult {
+    public GameplayResult(bool status) {
+        Status = status;
+    }
+
+    public bool Status { get; private set; }
+}

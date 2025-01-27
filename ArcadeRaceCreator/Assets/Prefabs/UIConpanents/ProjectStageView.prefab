@@ -97,7 +97,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3084493224956657531
 RectTransform:
   m_ObjectHideFlags: 0
@@ -250,12 +250,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _icon: {fileID: 9069885790050645590}
+  _stateIcon: {fileID: 3120868644408693255}
   _nameLabel: {fileID: 825748307256997056}
   _confirmButton: {fileID: 7812949244585316074}
-  _stateIcon: {fileID: 3120868644408693255}
   _animationDuration: 0.3
   _hoverDuration: 0.3
-  <Type>k__BackingField: 0
 --- !u!1 &3727545721513200126
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,7 +395,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0412\u044B\u0431\u0440\u0430\u0442\u044C"
+  m_text: "\u041D\u0430\u0447\u0430\u0442\u044C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3d3d6f40e61c30147b1bb3f2b92bc37a, type: 2}
   m_sharedMaterial: {fileID: -8809794338145149309, guid: 3d3d6f40e61c30147b1bb3f2b92bc37a, type: 2}
@@ -557,7 +556,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3950412977085287758
 RectTransform:
   m_ObjectHideFlags: 0

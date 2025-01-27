@@ -27,7 +27,6 @@ public class CarSelectionDialog : Dialog {
 
         ApplyButton.onClick.AddListener(ApplyButtonButtonClick);
         _carsTypePanel.CarsListChanged += OnCarsListChanged;
-
     }
 
     public override void RemoveListeners() {

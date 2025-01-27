@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
+using DG.Tweening;
 
 public class CarsManager : Manager {
     public event Action<Car> CurrentCarChanged;
+
+    [SerializeField] private float _animationDuration = 2f;
 
     private CarConfigs _carConfigs;
 
@@ -16,7 +19,7 @@ public class CarsManager : Manager {
     private CarTypes _currentCarType = CarTypes.None;
     List<Car> _currentSpawnedList = new List<Car>();
 
-    private List<Transform> _spawnPoints => ApplicationManager.EnvironmentManager.SpawnPoints;
+    private List<SpawnPoint> _spawnPoints => ApplicationManager.EnvironmentManager.SpawnPoints;
     
     [Inject]
     public void Construct(CarConfigs carConfigs) {
@@ -72,16 +75,23 @@ public class CarsManager : Manager {
         }
     }
 
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Tab)) {
+            ResetCar();
+        }    
+    }
+
     private void SpawnCars() {
         List<CarConfig> configs = _carConfigs.GetCarConfigsByType(_currentCarType);
         
         for (int i = 0; i < configs.Count; i++) {
             
-            Transform iPoint = _spawnPoints[i];
-            Car car = Instantiate(configs[i].Prefab, iPoint.position, iPoint.rotation);
+            SpawnPoint iPoint = _spawnPoints[i];
+            Car car = Instantiate(configs[i].Prefab, iPoint.transform.position, iPoint.transform.rotation);
             car.transform.SetParent(transform);
 
-            car.Init();
+            iPoint.SetCar(car);
+            car.Init(iPoint);
             car.Selected += OnCarSelected;
 
             AddCarToSpawnList(car);  
@@ -116,4 +126,21 @@ public class CarsManager : Manager {
         }
     }
 
+    public void ResetCar() {
+        if (_currentCar == null)
+            return;
+
+        Sequence resetCarPosition = DOTween.Sequence();
+        resetCarPosition.OnStart( () => _currentCar.Activate(false));
+        resetCarPosition.Append(_currentCar.transform.DOMoveY(2f, _animationDuration / 3));
+        resetCarPosition.Append(_currentCar.transform.DOMove(_currentCar.SpawnPoint.transform.position, _animationDuration));
+        resetCarPosition.Append(_currentCar.transform.DORotateQuaternion(_currentCar.SpawnPoint.transform.rotation, _animationDuration));
+        resetCarPosition.OnComplete(() => {
+            
+            PrepareCars(true);
+            ShowAllCars(true);
+
+            _currentCar = null;
+        });
+    }
 }

@@ -6,10 +6,10 @@ using UnityEngine.UI;
 
 public class Dialog : MonoBehaviour, IDisposable {
     public static event Action BackClicked;
-    public static event Action SettingsClicked;
+    public static event Action MainMenuClicked;
 
     [SerializeField] protected Button BackButton;
-    [SerializeField] protected Button SettingsButton;
+    [SerializeField] protected Button MainMenuButton;
     [SerializeField] protected Button ApplyButton;
 
     [SerializeField] protected List<UIPanel> Panels = new List<UIPanel>();
@@ -29,6 +29,10 @@ public class Dialog : MonoBehaviour, IDisposable {
 
     public virtual void Show(bool value) {
         gameObject.SetActive(value);
+
+        if (value == true && ApplyButton != null) {
+            ApplyButton.gameObject.SetActive(false);
+        }
     }
 
     public virtual void ShowPanel<T>(bool value) where T : UIPanel {
@@ -51,17 +55,13 @@ public class Dialog : MonoBehaviour, IDisposable {
         if (BackButton != null)
             BackButton.onClick.AddListener(BackButtonClick);
 
-        if (SettingsButton != null)
-            SettingsButton.onClick.AddListener(SettingsButtonClick);
-
-        if (ApplyButton != null) {
-            ApplyButton.gameObject.SetActive(false);
-        }
+        if (MainMenuButton != null)
+            MainMenuButton.onClick.AddListener(MainMenuClick);
     }
 
     public virtual void RemoveListeners() {
         BackButton.onClick.RemoveListener(BackButtonClick);
-        SettingsButton.onClick.RemoveListener(SettingsButtonClick);
+        MainMenuButton.onClick.RemoveListener(MainMenuClick);
     }
 
     public virtual T GetPanelByType<T>() where T : UIPanel {
@@ -76,13 +76,13 @@ public class Dialog : MonoBehaviour, IDisposable {
 
     }
 
-    private void BackButtonClick() {
+    public virtual void BackButtonClick() {
         ResetPanels();
 
         BackClicked?.Invoke();
     }
 
-    private void SettingsButtonClick() => SettingsClicked?.Invoke();
+    private void MainMenuClick() => MainMenuClicked?.Invoke();
 
 
     public void Dispose() {

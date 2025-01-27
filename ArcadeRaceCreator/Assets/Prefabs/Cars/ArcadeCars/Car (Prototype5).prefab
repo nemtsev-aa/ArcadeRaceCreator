@@ -734,7 +734,6 @@ Transform:
   m_Children:
   - {fileID: 3131342148965267589}
   - {fileID: 5365367012604486837}
-  - {fileID: 3748433804560179985}
   - {fileID: 5694431933426921438}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -774,11 +773,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6143355737517317890}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82cf47e50b3869e4993294b63294fb9a, type: 3}
+  m_Script: {fileID: 11500000, guid: 5bcf9c131812fbd4b92ce0367afecb44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _carController: {fileID: 3725842858692459201}
-  _selectionView: {fileID: 4181164622703659288}
+  _selectionView: {fileID: 0}
   <CameraAnker>k__BackingField: {fileID: 3131342148965267589}
   <EventsHandler>k__BackingField: {fileID: 0}
 --- !u!114 &3725842858692459201
@@ -1105,79 +1104,6 @@ Transform:
   - {fileID: 2924977088680408987}
   m_Father: {fileID: 6670316149110288653}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1936587969338111435
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 684189169687208539}
-    m_Modifications:
-    - target: {fileID: 3379169561622435546, guid: 6ba18c6b19ec7444d80c54e7dbc72344, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3379169561622435546, guid: 6ba18c6b19ec7444d80c54e7dbc72344, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3379169561622435546, guid: 6ba18c6b19ec7444d80c54e7dbc72344, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3379169561622435546, guid: 6ba18c6b19ec7444d80c54e7dbc72344, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3379169561622435546, guid: 6ba18c6b19ec7444d80c54e7dbc72344, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3379169561622435546, guid: 6ba18c6b19ec7444d80c54e7dbc72344, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3379169561622435546, guid: 6ba18c6b19ec7444d80c54e7dbc72344, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3379169561622435546, guid: 6ba18c6b19ec7444d80c54e7dbc72344, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3379169561622435546, guid: 6ba18c6b19ec7444d80c54e7dbc72344, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3379169561622435546, guid: 6ba18c6b19ec7444d80c54e7dbc72344, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4750512424513402166, guid: 6ba18c6b19ec7444d80c54e7dbc72344, type: 3}
-      propertyPath: m_Name
-      value: SelectionView
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6ba18c6b19ec7444d80c54e7dbc72344, type: 3}
---- !u!4 &3748433804560179985 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3379169561622435546, guid: 6ba18c6b19ec7444d80c54e7dbc72344, type: 3}
-  m_PrefabInstance: {fileID: 1936587969338111435}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4181164622703659288 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2370687176538062035, guid: 6ba18c6b19ec7444d80c54e7dbc72344, type: 3}
-  m_PrefabInstance: {fileID: 1936587969338111435}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6be886062bc0e0340820e0eac7bc6d1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2097401989258225449
 PrefabInstance:
   m_ObjectHideFlags: 0

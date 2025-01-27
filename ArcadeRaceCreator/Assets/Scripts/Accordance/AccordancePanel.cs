@@ -160,12 +160,8 @@ public class AccordancePanel : UIPanel {
         if (_compositionView == null || _resultView == null)
             return;
 
-        var description = _compositionView.Description;
-        var name = _resultView.Name;
-
-        var data = _equations.FirstOrDefault(data => data.Description == description && data.Name == name);
-
-        data.Result = (name == data.Name);
+        var data = _equations.FirstOrDefault(data => data.Description == _compositionView.Description);
+        data.Result = (_compositionView.Name == _resultView.Name);
 
         ShowEquationVerificationResult(data.Result);
         EquationVerificatedChanged?.Invoke(data, data.Result);

@@ -22,19 +22,17 @@ public class Bootstrap : MonoBehaviour {
         _soundsLoader = soundsLoader;
     }
 
-    private async void Start() {
-        await Init();
+    private void Start() {
+        Init();
     }
 
-    private async UniTask Init() {
+    private void Init() {
         _logger.Log("Bootstrap Init");
 
         //await SoundsLoading();
-
-        _logger.Log("ApplicationManager Init");
         //_applicationManager.Init(_uIManager, _environmentSoundManager, _carSFXManager);
-        _applicationManager.Init(_uIManager);
 
+        _applicationManager.Init(_uIManager);
         _logger.Log("Bootstrap Complited");
     }
 

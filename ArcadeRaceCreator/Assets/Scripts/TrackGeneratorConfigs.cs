@@ -11,4 +11,3 @@ public class TrackGeneratorConfigs : ScriptableObject {
         return SegmentConfigs.FirstOrDefault(t => t.Type == type);
     }
 }
-

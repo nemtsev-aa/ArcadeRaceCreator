@@ -14,18 +14,20 @@ public class ProjectStagesPanel : UIPanel {
 
     private ProjectStageConfigs _configs;
     private UICompanentsFactory _factory;
-
+    private Logger _logger;
     private List<ProjectStageView> _views;
     private ProjectStageView _currentView;
 
     [Inject]
-    public void Construct(ProjectStageConfigs configs, UICompanentsFactory factory) {
+    public void Construct(ProjectStageConfigs configs, UICompanentsFactory factory, Logger logger) {
         _configs = configs;
         _factory = factory;
+        _logger = logger;
     }
 
     public void Init() {
         AddListeners();
+
         _views = new List<ProjectStageView>();
     }
 
@@ -33,7 +35,6 @@ public class ProjectStagesPanel : UIPanel {
         base.Show(value);
 
         if (value == true) {
-
             if (_views.Count > 0) {
                 ShowProjectStageViews();
                 return;
@@ -43,13 +44,18 @@ public class ProjectStagesPanel : UIPanel {
         } 
     }
 
-    public void Prepare(ProjectStageTypes type) {
+    public void UpdateProjectStateView(ProjectStageTypes type, bool status) {
+        var view = _views.FirstOrDefault(t => t.Config.Type == type);
 
+        if (status)
+            view.SetState(ProjectStageState.TrueVerification);
+        else
+            view.SetState(ProjectStageState.FalseVerification);
     }
 
     public void ShowProjectStageViewByType(ProjectStageTypes type) {
-        if (_currentView != null)
-            _currentView.SetState(ProjectStageState.TrueVerification);
+        if (_views.Count == 0)
+            return;
 
         var view = _views.FirstOrDefault(t => t.Config.Type == type);
         view.SetState(ProjectStageState.Select);
@@ -72,7 +78,10 @@ public class ProjectStagesPanel : UIPanel {
             return;
 
         foreach (ProjectStageConfig iConfig in _configs.Configs) {
+
             ProjectStageViewConfig newViewConfig = new ProjectStageViewConfig(iConfig);
+            newViewConfig.SetProjectStageStateIcons(_configs.Lock, _configs.Complite, _configs.Fail);
+
             ProjectStageView newView = _factory.Get<ProjectStageView>(newViewConfig, _viewParent);
 
             newView.Init(newViewConfig);
@@ -98,6 +107,7 @@ public class ProjectStagesPanel : UIPanel {
         foreach (ProjectStageView iView in _views) {
             iView.transform.localScale = Vector3.zero;
             iView.transform.DOScale(Vector3.one, _animationDuration);
+            
             await UniTask.Delay(10);
         }
     }

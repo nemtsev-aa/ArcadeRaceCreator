@@ -7,9 +7,12 @@ public class ProjectStageViewConfig : UICompanentConfig {
         Name = stageConfig.Name;
         Description = stageConfig.Description;
         Icon = stageConfig.Icon;
-        Lock = stageConfig.Lock;
-        Complite = stageConfig.Complite;
-        Fail = stageConfig.Fail;
+    }
+
+    public void SetProjectStageStateIcons(Sprite s1, Sprite s2, Sprite s3) {
+        Lock = s1;
+        Complite = s2;
+        Fail = s3;
     }
 
     public ProjectStageTypes Type { get; private set; }

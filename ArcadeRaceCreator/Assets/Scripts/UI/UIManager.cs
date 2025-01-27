@@ -65,10 +65,12 @@ public class UIManager : MonoBehaviour, IDisposable {
         MainMenuDialog.SettingsDialogShowed += OnShowSettingsDialog;
 
         RoadMapDialog.ProjectStageSelected += OnRoadMapDialog_ProjectStageSelected;
+        RoadMapDialog.BackClicked += OnRoadMapDialog_BackClicked;
 
         EnvironmentTypeSelectionDialog.BackClicked += OnEnvironmentTypeSelectionDialog_BackClicked;
         EnvironmentTypeSelectionDialog.EnvironmentTypeSelected += OnEnvironmentTypeSelectionDialog_EnvironmentTypeSelected;
         EnvironmentTypeSelectionDialog.ApplyClicked += OnEnvironmentTypeSelectionDialog_ApplyClicked;
+        EnvironmentTypeSelectionDialog.MainMenuClicked += OnEnvironmentTypeSelectionDialog_MainMenuClicked;
 
         EnvironmentEditorDialog.BackClicked += OnEnvironmentEditorDialog_BackClicked;
         EnvironmentEditorDialog.ApplyClicked += OnEnvironmentEditorDialog_ApplyClicked;
@@ -80,15 +82,23 @@ public class UIManager : MonoBehaviour, IDisposable {
         CodingMiniGameDialog.BackClicked += OnCodingMiniGameDialog_BackClicked;
         CodingMiniGameDialog.ApplyClicked += OnCodingMiniGameDialog_ApplyClicked;
 
+        GameplayDialog.BackClicked += OnGameplayDialog_BackClicked;
+        GameplayDialog.ApplyButtonClicked += OnGameplayDialog_ApplyButtonClicked;
+        GameplayDialog.MainMenuClicked += OnGameplayDialog_ManMenuClicked;
     }
+
 
     private void RemoveLisener() {
         MainMenuDialog.RoadMapShowed -= OnShowRoadMapDialog;
         MainMenuDialog.SettingsDialogShowed -= OnShowSettingsDialog;
 
+        RoadMapDialog.ProjectStageSelected -= OnRoadMapDialog_ProjectStageSelected;
+        RoadMapDialog.BackClicked -= OnRoadMapDialog_BackClicked;
+
         EnvironmentTypeSelectionDialog.BackClicked -= OnEnvironmentTypeSelectionDialog_BackClicked;
         EnvironmentTypeSelectionDialog.EnvironmentTypeSelected -= OnEnvironmentTypeSelectionDialog_EnvironmentTypeSelected;
         EnvironmentTypeSelectionDialog.ApplyClicked -= OnEnvironmentTypeSelectionDialog_ApplyClicked;
+        EnvironmentTypeSelectionDialog.MainMenuClicked -= OnEnvironmentTypeSelectionDialog_MainMenuClicked;
 
         EnvironmentEditorDialog.BackClicked -= OnEnvironmentEditorDialog_BackClicked;
         EnvironmentEditorDialog.ApplyClicked -= OnEnvironmentEditorDialog_ApplyClicked;
@@ -100,6 +110,9 @@ public class UIManager : MonoBehaviour, IDisposable {
         CodingMiniGameDialog.BackClicked -= OnCodingMiniGameDialog_BackClicked;
         CodingMiniGameDialog.ApplyClicked -= OnCodingMiniGameDialog_ApplyClicked;
 
+        GameplayDialog.BackClicked -= OnGameplayDialog_BackClicked;
+        GameplayDialog.ApplyButtonClicked -= OnGameplayDialog_ApplyButtonClicked;
+        GameplayDialog.MainMenuClicked -= OnGameplayDialog_ManMenuClicked;
     }
 
     #endregion
@@ -115,16 +128,19 @@ public class UIManager : MonoBehaviour, IDisposable {
 
     private void OnShowRoadMapDialog() => DialogSwitcher.ShowDialog<RoadMapDialog>();
 
-    //private void OnSettingsDialogResetClicked() => 
-    //    _levelsMode.ResetPlayerProgress();
+    private void OnMainMenuClicked() => OnShowMainMenuDialog();
 
     #region RoadMap
+
+    private void OnRoadMapDialog_BackClicked() {
+        ShowMainMenuDialog();
+    }
+
     private void OnRoadMapDialog_ProjectStageSelected(ProjectStageTypes type) {
         _applicationManager.SwitchToStage(type);
     }
 
     #endregion
-
 
     #region EnvironmentTypeSelectionDialog
 
@@ -137,10 +153,13 @@ public class UIManager : MonoBehaviour, IDisposable {
     }
 
     private void OnEnvironmentTypeSelectionDialog_ApplyClicked() {
-        EnvironmentTypeSelectionDialog dialog = GetDialogByType<EnvironmentTypeSelectionDialog>();
-        _applicationManager.SetEnvironmentType(dialog.Config.Type);
+        _applicationManager.SetEnvironmentType();
 
         OnShowRoadMapDialog();
+    }
+
+    private void OnEnvironmentTypeSelectionDialog_MainMenuClicked() {
+        OnMainMenuClicked();
     }
 
     #endregion
@@ -171,7 +190,7 @@ public class UIManager : MonoBehaviour, IDisposable {
 
     private void OnCarSelectionDialog_ApplyClicked() {
         var dialog = GetDialogByType<CarSelectionDialog>();
-        _applicationManager.SetCarsConfig();
+        _applicationManager.SetCarsConfig(dialog.Configs);
 
         OnShowRoadMapDialog();
     }
@@ -192,56 +211,24 @@ public class UIManager : MonoBehaviour, IDisposable {
 
     #endregion
 
-    #region GameDialog Events
+    #region GameplayDialog
 
-    //private void OnHintClicked(bool value) =>
-    //    _levelsMode.SetPause(value);
+    private void OnGameplayDialog_BackClicked() {
+        _applicationManager.SetGameplayResult(new GameplayResult(false));
 
-    //private void OnPauseClicked(bool value) =>
-    //    _levelsMode.SetPause(value);
-
-    private void OnMainMenuClicked() => OnShowMainMenuDialog();
-
-    private void OnGameDialogResetClicked() {
-        //CurrentMode.FinishGameplay(Switchovers.CurrentLevel);
-
-        //if (ActiveDialog is LearningModeDialog) {
-        //    OnLearningModeSelected();
-        //    return;
-        //}
-
-        //if (ActiveDialog is ArcadeModeDialog) {
-        //    OnArcadeModeSelected();
-        //    return;
-        //}
-    }
-        
-
-    //private void OnLevelDialogNextLevelClicked() =>
-    //    _levelsMode.FinishGameplay(Switchovers.NextLevel);
-
-    //private void OnGameDialogCountdownPanelHided() =>
-    //    _levelsMode.ShowRewarded();
-
-    private void OnArcadeModeSelected() {
-        //_applicationManager.SwitchToMode<ArcadeGameMode>();
-
-        //DialogSwitcher.ShowDialog<ArcadeModeDialog>();
+        OnShowRoadMapDialog();
     }
 
-    #endregion
+    private void OnGameplayDialog_ApplyButtonClicked() {
+        GameplayDialog dialog = GetDialogByType<GameplayDialog>();
+        _applicationManager.SetGameplayResult(dialog.Result);
 
-    #region LearningDialog Events
+        OnShowRoadMapDialog();
+    }
 
-    //private void OnNextLearningStep() =>
-    //    _learningMode.ShowDescriptionInPanel();
-
-    //private void OnLearningFinished() {
-    //    _learningMode.FinishGameplay(Switchovers.MainMenu);
-
-    //    OnShowMainMenuDialog();
-    //    GetDialogByType<MainMenuDialog>().ShowGameModesPanel();
-    //}
+    private void OnGameplayDialog_ManMenuClicked() {
+        OnMainMenuClicked();
+    }
 
     #endregion
 

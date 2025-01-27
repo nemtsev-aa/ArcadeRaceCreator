@@ -10,6 +10,7 @@ public enum ProjectStageTypes {
     EnvironmentEditing,
     CodingMiniGame,
     Gameplay,
+    InvitationToCooperation,
     None
 }
 
@@ -24,8 +25,6 @@ public enum ProjectStageState {
 public class ProjectStageView : UICompanent {
     public event Action<ProjectStageTypes> ProjectStageViewSelected;
 
-    [field: SerializeField] public ProjectStageTypes Type { get; private set; }
-
     [SerializeField] private Image _icon;
     [SerializeField] private Image _stateIcon;
     [SerializeField] private TextMeshProUGUI _nameLabel;
@@ -35,6 +34,7 @@ public class ProjectStageView : UICompanent {
     [SerializeField] private float _animationDuration = 0.3f;
     [SerializeField] private float _hoverDuration = 0.3f;
 
+    public ProjectStageTypes Type => Config.Type;
     public ProjectStageState CurrentState { get; private set; } = ProjectStageState.None;
     public ProjectStageViewConfig Config { get; private set; }
 
@@ -44,6 +44,9 @@ public class ProjectStageView : UICompanent {
 
     public void Init(ProjectStageViewConfig config) {
         Config = config;
+
+        _icon.sprite = Config.Icon;
+        _nameLabel.text = Config.Name;
 
         UpdateCompanents();
         SetState(ProjectStageState.Unselect);
@@ -80,29 +83,24 @@ public class ProjectStageView : UICompanent {
     }
 
     private void EnterState() {
+        UpdateCompanents();
+        UpdateConfurmButtonVision();
 
         switch (CurrentState) {
             case ProjectStageState.Unselect:
-                UpdateCompanents();
-
+                
                 break;
 
             case ProjectStageState.Select:
-                UpdateCompanents();
                 StartEmergenceSequence();
-
                 break;
 
             case ProjectStageState.TrueVerification:
-                _stateIcon.sprite = Config.Complite;
-                UpdateConfurmButtonVision();
-
+                StartDisappearSequence();
                 break;
 
             case ProjectStageState.FalseVerification:
-                _stateIcon.sprite = Config.Fail;
-                UpdateConfurmButtonVision();
-
+                StartDisappearSequence();
                 break;
 
             default:
@@ -111,14 +109,13 @@ public class ProjectStageView : UICompanent {
     }
 
     private void UpdateCompanents() {
-        _icon.sprite = Config.Icon;
-        _nameLabel.gameObject.SetActive(false);
-
         ShowStateIcon();
         UpdateConfurmButtonVision();
+        UpdateNameLabelVision();
 
         _icon.DOFade(0.5f, _animationDuration);
     }
+
 
     private void ConfirmButton_Click() {
         ProjectStageViewSelected?.Invoke(Type);
@@ -133,26 +130,18 @@ public class ProjectStageView : UICompanent {
         _emergence.Append(_icon.DOFade(1f, _animationDuration));
         _emergence.Append(_icon.transform.DOLocalMove(_icon.transform.localPosition + Vector3.up * 100f, _animationDuration));
         _emergence.Append(_nameLabel.DOFade(1f, _animationDuration));
-        _emergence.OnComplete(() => {
-            UpdateConfurmButtonVision();
-            _isActive = true;
-        });
-
         _emergence.Play();
     }
 
     private void StartDisappearSequence() {
-        if (_confirmButton.gameObject.activeInHierarchy == true)
-            UpdateConfurmButtonVision();
+        _icon.transform.localPosition = Vector3.zero;
+        _nameLabel.transform.localPosition = Vector3.up * -150f;
 
         _disappear = DOTween.Sequence();
-        _disappear.Append(_nameLabel.DOFade(0f, _animationDuration));
-        _disappear.Append(_icon.transform.DOLocalMove(_icon.transform.localPosition + Vector3.up * -100f, _animationDuration)) ;
+        _disappear.SetDelay(_animationDuration * 2f);
+        _disappear.Append(_stateIcon.transform.DOScale(0.9f, 0f));
+        _disappear.Append(_stateIcon.transform.DOScale(1.1f, _animationDuration * 2f)).SetEase(Ease.Linear).SetLoops(3);
         _disappear.Append(_icon.DOFade(0.5f, _animationDuration));
-        _disappear.OnComplete(() => {
-            UpdateConfurmButtonVision();
-            _isActive = false;
-        });
 
         _disappear.Play();
     }
@@ -189,6 +178,16 @@ public class ProjectStageView : UICompanent {
 
         if (CurrentState == ProjectStageState.Select || CurrentState == ProjectStageState.FalseVerification)
             _confirmButton.gameObject.SetActive(true);
+    }
+
+    private void UpdateNameLabelVision() {
+
+        if (CurrentState == ProjectStageState.Unselect || CurrentState == ProjectStageState.TrueVerification)
+            _nameLabel.gameObject.SetActive(false);
+
+        if (CurrentState == ProjectStageState.Select || CurrentState == ProjectStageState.FalseVerification)
+            _nameLabel.gameObject.SetActive(true);
+
     }
 
     public override void Dispose() {

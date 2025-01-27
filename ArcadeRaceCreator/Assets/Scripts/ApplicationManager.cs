@@ -5,12 +5,8 @@ using UnityEngine;
 using Zenject;
 
 public class ApplicationManager : MonoBehaviour {
-    //[SerializeField] private LearningGameMode _learningMode;
-    //[SerializeField] private LevelsGameMode _levelsMode;
-    //[SerializeField] private ArcadeGameMode _arcadeMode;
-
     [SerializeField] private CameraFollow _cameraFollow;
-    [SerializeField] private CameraMove _cameraMove;
+    [SerializeField] private CameraMoveController _cameraMove;
     [SerializeField] private EnvironmentDemo _environmentDemo;
     [SerializeField] private EnvironmentEditor _environmentEditor;
     [SerializeField] private CarsManager _carsManager;
@@ -20,12 +16,10 @@ public class ApplicationManager : MonoBehaviour {
     private EnvironmentSoundManager _environmentSoundManager;
     private UIManager _uIManager;
     private CarSFXManager _sheepSFXManager;
-
     private List<Manager> _managers = new List<Manager>();
-    
-
 
     #region Public Propertis
+    public Logger Logger => _logger;
     public UIManager UIManager => _uIManager;
     public SoundsLoader SoundsLoader => _soundsLoader;
     public EnvironmentSoundManager EnvironmentSound => _environmentSoundManager;
@@ -35,6 +29,10 @@ public class ApplicationManager : MonoBehaviour {
     public AttemptData AttemptData { get; private set; }
     public ProjectStageTypes CurrentProjectStageType { get; private set; }
     public EnvironmentManager EnvironmentManager { get; private set; }
+    public CameraMoveController CameraMoveController => _cameraMove;
+    
+    public Dictionary<ProjectStageTypes, bool> ProjectStages = new Dictionary<ProjectStageTypes, bool>();
+
     public Car CurrentCar { get; private set; }
 
     #endregion
@@ -45,35 +43,17 @@ public class ApplicationManager : MonoBehaviour {
         _soundsLoader = soundsLoader;
     }
 
-    public void Init(UIManager uIManager, EnvironmentSoundManager environmentSoundManager, CarSFXManager sheepSFXManager) {
-        _uIManager = uIManager;
-        _environmentSoundManager = environmentSoundManager;
-        _sheepSFXManager = sheepSFXManager;
-
-        //_managers.AddRange(new IGameMode[] { 
-        //    //_learningMode,
-        //    //_levelsMode,
-        //    //_arcadeMode
-        //});
-
-        _logger.Log("UIManager Init");
-        _uIManager.Init(this);
-
-        _uIManager.ShowMainMenuDialog();
-
-        AttemptData = new AttemptData();
-    }
-
     public void Init(UIManager uIManager) {
         _uIManager = uIManager;
         _uIManager.Init(this);
+        
+        _uIManager.GetDialogByType<RoadMapDialog>().SetApplicationManager(this);
         _uIManager.ShowMainMenuDialog();
 
-        _uIManager.GetDialogByType<RoadMapDialog>().SetApplicationManager(this);
-
         AttemptData = new AttemptData();
-
         InitManagers();
+
+        CurrentProjectStageType = ProjectStageTypes.EnvironmentTypeSelection;
 
         _logger.Log("ApplicationManager Init");
     }
@@ -91,19 +71,38 @@ public class ApplicationManager : MonoBehaviour {
     }
 
     public void SwitchToStage(ProjectStageTypes type = ProjectStageTypes.None) {
+
+        if (type == ProjectStageTypes.None) {
+            UIManager.DialogSwitcher.ShowDialog<MainMenuDialog>();
+            return;
+        }
+        
+        if (ProjectStages.ContainsKey(type) == false) 
+            ProjectStages.Add(type, false);
+
         CurrentProjectStageType = type;
 
         switch (type) {
-            case ProjectStageTypes.EnvironmentTypeSelection:
-                UIManager.DialogSwitcher.ShowDialog<EnvironmentTypeSelectionDialog>();
 
-                SwitchActiveManager(_environmentDemo);
-                _environmentDemo.ShowEnvironmentByType(EnvironmentTypes.Parking);
+            case ProjectStageTypes.None:
+                UIManager.DialogSwitcher.ShowDialog<MainMenuDialog>();
 
                 break;
 
+            case ProjectStageTypes.EnvironmentTypeSelection:
+                SwitchActiveManager(_environmentDemo);
+                ShowEnvironment(EnvironmentTypes.Parking);
+
+                UIManager.DialogSwitcher.ShowDialog<EnvironmentTypeSelectionDialog>();
+                break;
+
             case ProjectStageTypes.EnvironmentEditing:
+                ShowEnvironment(EnvironmentManager.Type);
+
+                EnvironmentManager.ActvatePhysicForInteractionObjects(false);
+
                 SwitchActiveManager(_environmentEditor);
+
                 _cameraMove.SetTargetPosition(_environmentEditor.gameObject.transform.position);
                 _cameraMove.Activate(true);
 
@@ -114,30 +113,31 @@ public class ApplicationManager : MonoBehaviour {
             case ProjectStageTypes.CarsTypeSelection:
                 SwitchActiveManager(_carsManager);
 
-                _cameraMove.SetTargetPosition(_carsManager.transform.position);
-                _cameraMove.Activate(true);
+                _cameraFollow.SetTarget(EnvironmentManager.SpawnPoints[1].transform);
+                _cameraFollow.Activate(true);
 
                 UIManager.DialogSwitcher.ShowDialog<CarSelectionDialog>();
+                _carsManager.ShowCarsByType(CarTypes.Arcade);
 
                 break;
 
             case ProjectStageTypes.CodingMiniGame:
                 UIManager.DialogSwitcher.ShowDialog<CodingMiniGameDialog>();
+                
+                _cameraMove.Activate(false);
 
                 break;
 
             case ProjectStageTypes.Gameplay:
                 SwitchActiveManager(_carsManager);
-                
                 _cameraMove.Activate(false);
 
+                EnvironmentManager.ActvatePhysicForInteractionObjects(true);
                 PrepareCars();
 
                 UIManager.DialogSwitcher.ShowDialog<GameplayDialog>();
-
-                break;
-
-            case ProjectStageTypes.None:
+                _cameraFollow.SetTarget(EnvironmentManager.SpawnPoints[1].transform);
+                _cameraFollow.Activate(true);
 
                 break;
 
@@ -150,18 +150,25 @@ public class ApplicationManager : MonoBehaviour {
         _environmentDemo.ShowEnvironmentByType(type);
     }
 
-    public void SetEnvironmentType(EnvironmentTypes type) {
-        EnvironmentManager = _environmentDemo.CurrentEnvironmentManager;
+    public void SetEnvironmentType() {
         _environmentDemo.Activate(false);
 
-        AttemptData.SetEnvironmentType(type);
+        EnvironmentManager = _environmentDemo.CurrentEnvironmentManager;
+        AttemptData.SetEnvironmentType(EnvironmentManager.Type);
+
+        ProjectStages[ProjectStageTypes.EnvironmentTypeSelection] = true;
+        CurrentProjectStageType = ProjectStageTypes.EnvironmentEditing;
     }
 
     public void SetEnvironmentEditorData() {
         EnvironmentEditorData data = EnvironmentManager.GetEnvironmentEditorData();
         AttemptData.SetEnvironmentEditorData(data);
 
+        _cameraMove.MoveWhileEdgeScreen = false;
         _cameraMove.Activate(false);
+
+        ProjectStages[ProjectStageTypes.EnvironmentEditing] = true;
+        CurrentProjectStageType = ProjectStageTypes.CarsTypeSelection;
     }
 
     public void SetCarsType(CarTypes type) {
@@ -169,18 +176,31 @@ public class ApplicationManager : MonoBehaviour {
         
         _carsManager.ShowCarsByType(type);
         _carsManager.PrepareCars(false);
-    }
 
-    public void PrepareCars() {
-        _carsManager.PrepareCars(true);
-    }
-
-    public void SetCarsConfig() {
-        
+        ProjectStages[ProjectStageTypes.CarsTypeSelection] = true;
+        CurrentProjectStageType = ProjectStageTypes.CodingMiniGame;
     }
 
     public void SetCodingMiniGameResult(CodingMiniGameResult result) {
         AttemptData.SetCodingMiniGameResult(result);
+
+        ProjectStages[ProjectStageTypes.CodingMiniGame] = true;
+        CurrentProjectStageType = ProjectStageTypes.Gameplay;
+    }
+
+    public void SetGameplayResult(GameplayResult result) {
+        _carsManager.ResetCar();
+
+        if (result.Status == false)
+            return;
+
+        AttemptData.SetGameplayResult(result);
+        ProjectStages[ProjectStageTypes.Gameplay] = true;
+        CurrentProjectStageType = ProjectStageTypes.InvitationToCooperation;
+    }
+
+    public void PrepareCars() {
+        _carsManager.PrepareCars(true);
     }
 
     public void ActivateCar(Car car) {
@@ -191,6 +211,16 @@ public class ApplicationManager : MonoBehaviour {
 
         _cameraFollow.SetTarget(CurrentCar.transform);
         _cameraFollow.Activate(true);
+
+        UIManager.GetDialogByType<GameplayDialog>()
+                 .GetPanelByType<CarSpeedPanel>()
+                 .SetCar(CurrentCar);
+
+        _carsManager.PrepareCars(false);
+    }
+
+    public void SetCarsConfig(List<CarConfig> configs) {
+
     }
 
     private void InitManagers() {

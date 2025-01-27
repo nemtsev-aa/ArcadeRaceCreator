@@ -4,17 +4,21 @@ public class ObjectInteraction : MonoBehaviour {
     private MeshCollider _meshCollider;
     private Rigidbody _rigidbody;
 
-    private void Start() {
+    public void Init() {
         _meshCollider ??= GetComponent<MeshCollider>();
         _rigidbody ??= GetComponent<Rigidbody>();
 
         Select(false);
+        SetPhysic(false);
+    }
+
+    public void SetPhysic(bool status) {
+        _rigidbody.useGravity = status;
+        _rigidbody.isKinematic = !status;
     }
 
     public void Select(bool status) {
         _meshCollider.enabled = !status;
-        //_rigidbody.isKinematic = !status;
-        //_rigidbody.useGravity = status;
     }
 
     public ObjectInteractionData GetData() {

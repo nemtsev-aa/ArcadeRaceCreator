@@ -12,8 +12,8 @@ public class EnvironmentEditor : Manager {
 
     private DesktopInput _desktopInput;
     private SwipeHandler _swipeHandler;
-    private BuildingMenuPanel _buildingMenuPanel;
-
+    private EnvironmentEditorMenuPanel _editorMenuPanel;
+    private CameraControllsPanel _cameraControllsPanel;
     private ObjectInteraction _selectedObject;
     private BuildingFunctionTypes _currentBuildingFunctionType = BuildingFunctionTypes.None;
     private SwipeDirection _swipeDirection;
@@ -31,17 +31,22 @@ public class EnvironmentEditor : Manager {
         base.Activate(status);
 
         if (status == true) {
-            _buildingMenuPanel = ApplicationManager.UIManager.GetDialogByType<EnvironmentEditorDialog>()
-                                                             .GetPanelByType<BuildingMenuPanel>();
+            var UIManager = ApplicationManager.UIManager;
+            _editorMenuPanel = UIManager.GetDialogByType<EnvironmentEditorDialog>()
+                                        .GetPanelByType<EnvironmentEditorMenuPanel>();
 
+            _cameraControllsPanel = UIManager.GetDialogByType<EnvironmentEditorDialog>()
+                                             .GetPanelByType<CameraControllsPanel>();
+
+            _cameraControllsPanel.Init(ApplicationManager.CameraMoveController);
+            
             AddListeners();
-            return;
         }
     }
  
     #region Subscriptions
     private void AddListeners() {
-        _buildingMenuPanel.ActivateBuildingFunctionTypeChanged += OnActivateBuildingFunctionTypeChanged;
+        _editorMenuPanel.ActivateBuildingFunctionTypeChanged += OnActivateBuildingFunctionTypeChanged;
 
         _desktopInput.SelectorPressed += OnSelectorPressed;
         _desktopInput.StartSwiping += OnStartSwiping;
@@ -50,7 +55,7 @@ public class EnvironmentEditor : Manager {
     }
 
     private void RemoveListeners() {
-        _buildingMenuPanel.ActivateBuildingFunctionTypeChanged -= OnActivateBuildingFunctionTypeChanged;
+        _editorMenuPanel.ActivateBuildingFunctionTypeChanged -= OnActivateBuildingFunctionTypeChanged;
 
         _desktopInput.SelectorPressed -= OnSelectorPressed;
         _desktopInput.StartSwiping -= OnStartSwiping;

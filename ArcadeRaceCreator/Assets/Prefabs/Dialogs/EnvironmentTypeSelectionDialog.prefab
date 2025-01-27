@@ -400,7 +400,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BackButton: {fileID: 8046133345023313255}
-  SettingsButton: {fileID: 1846700831167669264}
+  MainMenuButton: {fileID: 1846700831167669264}
   ApplyButton: {fileID: 5044119226226897305}
   Panels:
   - {fileID: 6166350721491268969}
